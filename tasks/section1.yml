@@ -465,6 +465,11 @@
   ansible.builtin.apt:
     upgrade: dist
     force_apt_get: true
+    autoremove: true
+  register: apt_upgrade_result
+  retries: 5
+  delay: 60
+  until: apt_upgrade_result is succeeded  
   when:
     - cis_ubuntu2204_rule_1_2_2_1
   tags:
