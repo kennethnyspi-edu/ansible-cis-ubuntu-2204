@@ -6,8 +6,8 @@
   ansible.builtin.set_fact:
     cis_ubuntu2004_effective_protected_services: >-
       {{
-        cis_ubuntu2004_protected_services
-        + (cis_ubuntu2004_role_protected_services[firewall_role] | default([]))
+        cis_ubuntu2204_protected_services
+        + (cis_ubuntu2204_role_protected_services[firewall_role] | default([]))
       }}
   when: firewall_role is defined
   tags:
