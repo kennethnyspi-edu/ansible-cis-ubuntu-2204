@@ -763,3 +763,32 @@ cis_ubuntu2204_section2_mode_cron_folder: "0700"
 cis_ubuntu2204_section3_owner_default: root
 cis_ubuntu2204_section3_group_default: root
 cis_ubuntu2204_section3_mode_default: "0644"
+
+cis_ubuntu2204_protected_services:
+  - mysql
+  - mariadb
+  - postgresql
+  - apache2
+  - nginx
+  - splunk
+  - zabbix-agent2
+  - zabbix-server
+
+cis_ubuntu2204_role_protected_services:
+  web:
+    - apache2
+    - containerd
+    - nginx
+    - php*-fpm
+    - mariadb
+    - mysql
+  db:
+    - mariadb
+    - mysql
+    - postgresql
+  security_profile:
+    - vsftpd
+    - proftpd
+    - tftpd-hpa
+    - snmpd
+    - rsyslog

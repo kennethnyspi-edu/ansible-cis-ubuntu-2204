@@ -2,6 +2,16 @@
 # tasks file for ansible-cis-ubuntu-2204
 
 # ------------------------------------------------------------------------------
+- name: "SECTION-X | SUB-TASK | Merge protected services based on role"
+  ansible.builtin.set_fact:
+    cis_ubuntu2004_effective_protected_services: >-
+      {{
+        cis_ubuntu2004_protected_services
+        + (cis_ubuntu2004_role_protected_services[firewall_role] | default([]))
+      }}
+  when: firewall_role is defined
+  tags:
+    - always
 
 - name: "SECTION-X | SUB-TASK | Ensure services are not in use or purged | service rule info"
   ansible.builtin.debug:
@@ -33,6 +43,7 @@
     - outer_item.service is defined
     - outer_item.disable | bool
     - service_status_check_loop_2_1.results | selectattr('item', 'equalto', item) | map(attribute='stdout') | list | first == "loaded"
+    - item not in (cis_ubuntu2204_effective_protected_services | default(cis_ubuntu2204_protected_services))
 
 - name: "SECTION-X | SUB-TASK | Ensure services are not in use or purged | purge task"
   when:
@@ -47,3 +58,5 @@
         name: "{{ outer_item.apt }}"
         state: absent
         purge: true
+      when:
+        - outer_item.apt | difference(cis_ubuntu2204_effective_protected_services | default(cis_ubuntu2204_protected_services)) | length > 0
