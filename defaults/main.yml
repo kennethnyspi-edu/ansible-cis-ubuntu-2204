@@ -456,6 +456,15 @@ cis_ubuntu2204_ssh_allow_tcp_forwarding: "no"
 cis_ubuntu2204_rule_5_1_24_ssh_user: "{{ ansible_user }}"
 # cis_ubuntu2204_rule_5_1_24_ssh_pub_key: "<ADD_PUB_KEY>"
 
+# (cis_ubuntu2204_rule_5_2_4)
+cis_ubuntu2204_sudo_nopasswd_exceptions:
+  - ubuntu
+  - ec2-user
+  - kennethnypi
+  - angienypi
+  - waseemnypi
+  - ansible-user
+
 # (cis_ubuntu2204_rule_5_3_*)
 cis_ubuntu2204_faillock_deny: 5
 cis_ubuntu2204_faillock_unlock_time: 900
