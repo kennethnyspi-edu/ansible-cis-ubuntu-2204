@@ -659,7 +659,7 @@
         regexp: >-
           ^(?!#)
           (?!
-            ({{ cis_ubuntu2404_sudo_nopasswd_exceptions | join('|') }})\b
+            ({{ cis_ubuntu2204_sudo_nopasswd_exceptions | join('|') }})\b
           )
           (.*NOPASSWD.*)
         replace: '#\1'
