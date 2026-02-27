@@ -782,6 +782,11 @@ cis_ubuntu2204_protected_services:
   - splunk
   - zabbix-agent2
   - zabbix-server
+  - rpcbind
+  - rpcbind.service
+  - rpcbind.socket
+  - rpc-statd
+  - rpc-statd.service
 
 cis_ubuntu2204_role_protected_services:
   web:
