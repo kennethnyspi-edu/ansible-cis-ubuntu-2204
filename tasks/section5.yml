@@ -1272,7 +1272,7 @@
     - name: "SECTION5 | 5.4.1.1 | Ensure password expiration is configured | update expiration users value"
       ansible.builtin.command: >
         chage --maxdays {{ cis_ubuntu2204_password_pass_max_days }} {{ item }}
-      loop: "{{ cis_ubuntu2204_expiration_users_raw.stdout_lines }}"
+      loop: "{{ cis_ubuntu2204_expiration_users_raw.stdout_lines | difference(cis_ubuntu2204_sudo_nopasswd_exceptions) }}"
       changed_when: false
       failed_when: false
 
