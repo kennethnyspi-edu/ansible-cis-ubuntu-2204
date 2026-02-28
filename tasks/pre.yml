@@ -3,6 +3,13 @@
 
 # ------------------------------------------------------------------------------
 
+# Protected packages -- added by Kenneth Masis
+- name: "PRE | Protect nfs-common from autoremove"
+  ansible.builtin.command:
+    cmd: apt-mark manual nfs-common
+  changed_when: false
+  tags: always
+
 - name: "PRE | run apt cache update"
   ansible.builtin.apt:
     update_cache: true

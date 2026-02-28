@@ -24,3 +24,25 @@
     - apt_removed_packages.stdout_lines is defined
     - apt_removed_packages.stdout_lines | length > 0
     - not ansible_check_mode
+
+## Restore and protect nfs-common AFTER all cleanup is done  -- Added by Kenneth Masis
+- name: "POST | Ensure nfs-common is present after CIS remediation"
+  ansible.builtin.apt:
+    name: nfs-common
+    state: present
+    force_apt_get: true
+  tags: always
+
+- name: "POST | Mark nfs-common as manually installed to prevent future autoremove"
+  ansible.builtin.command:
+    cmd: apt-mark manual nfs-common
+  changed_when: false
+  tags: always
+
+- name: "POST | Verify nfs-common is installed and protected"
+  ansible.builtin.command:
+    cmd: apt-mark showmanual nfs-common
+  register: nfs_post_check
+  changed_when: false
+  failed_when: "'nfs-common' not in nfs_post_check.stdout"
+  tags: always
