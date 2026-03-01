@@ -300,7 +300,15 @@
         paths: /var/log/
         file_type: file
         recurse: true
+        # Exclude journal files - systemd-journald manages these permissions
+        # and they rotate actively causing race conditions
+        excludes:
+          - "*.journal"
+          - "*.journal~"
       register: cis_ubuntu2204_logfiles
+      changed_when: false
+      check_mode: false
+
     - name: "SECTION6 | 6.2.2.1 | Ensure access to all logfiles has been configured | set logfile access"
       ansible.builtin.file:
         dest: "{{ item.path }}"
@@ -315,7 +323,15 @@
         logfiles_item_owner: "{{ cis_ubuntu2204_logfiles_access | selectattr('files', 'search', item.path | basename) | map(attribute='owner') | first }}"
         logfiles_item_group: "{{ cis_ubuntu2204_logfiles_access | selectattr('files', 'search', item.path | basename) | map(attribute='group') | first }}"
         logfiles_item_mode: "{{ cis_ubuntu2204_logfiles_access | selectattr('files', 'search', item.path | basename) | map(attribute='mode') | first }}"
-
+      # Safety net for any file that disappears mid-loop due to log rotation
+      register: logfile_permission_result
+      failed_when:
+        - logfile_permission_result.msg is defined
+        - "'is absent' not in (logfile_permission_result.msg | default(''))"
+        - "'No such file' not in (logfile_permission_result.msg | default(''))"
+      changed_when:
+        - logfile_permission_result.msg is not defined
+        - logfile_permission_result.state | default('') != 'absent'
 # ------------------------------------------------------------------------------
 
 - name: "SECTION6 | 6.3.1.1 | Ensure auditd packages are installed"
