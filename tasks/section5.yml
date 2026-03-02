@@ -15,6 +15,19 @@
     - server_l1
     - workstation_l1
 
+- name: "SECTION5 | Remove specific 'AuthenticationMethods publickey' from sshd_config"
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^AuthenticationMethods\s+publickey\s*$'
+    state: absent
+    create: false
+  when:
+    - service_status_ssh.stdout == "loaded"
+  tags:
+    - rule_5_1
+    - server_l1
+    - workstation_l1
+
 - name: "SECTION5 | 5.1.1 | Ensure permissions on /etc/ssh/sshd_config are configured"
   ansible.builtin.file:
     dest: /etc/ssh/sshd_config
