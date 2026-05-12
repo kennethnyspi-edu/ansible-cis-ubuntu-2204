@@ -46,3 +46,18 @@
   changed_when: false
   failed_when: "'nfs-common' not in nfs_post_check.stdout"
   tags: always
+
+- name: "POST | Ensure SFTP subsystem uses correct Ubuntu path"
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^Subsystem sftp'
+    line: 'Subsystem sftp /usr/lib/openssh/sftp-server'
+  notify: Restart sshd
+  tags: always
+
+- name: "POST | Validate sshd config after changes"
+  ansible.builtin.command:
+    cmd: sshd -t
+  changed_when: false
+  failed_when: false
+  tags: always
