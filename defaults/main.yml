@@ -43,7 +43,7 @@ cis_ubuntu2204_rule_1_1_2_2: true # /dev/shm
 # cis_ubuntu2204_rule_1_1_2_7: false # NOTE: not implemented, separate partition not created
 cis_ubuntu2204_rule_1_2_1_1: true
 cis_ubuntu2204_rule_1_2_1_2: true
-cis_ubuntu2204_rule_1_2_2_1: true
+cis_ubuntu2204_rule_1_2_2_1: false   # disabled by Kenneth Masis
 cis_ubuntu2204_rule_1_3_1_1: true
 cis_ubuntu2204_rule_1_3_1_2: true
 cis_ubuntu2204_rule_1_3_1_3: true # NOTE: will run to have all in complain-mode, for enforce use 'cis_ubuntu2204_rule_1_3_1_4'
@@ -270,7 +270,7 @@ cis_ubuntu2204_rule_6_2_1_2_1: true # NOTE: depends also on 'cis_ubuntu2204_set_
 cis_ubuntu2204_rule_6_2_1_2_2: true # NOTE: depends also on 'cis_ubuntu2204_set_journal_upload'
 # cis_ubuntu2204_rule_6_2_1_2_3: true # NOTE: implicit in 'cis_ubuntu2204_rule_6_2_1_2_2'
 cis_ubuntu2204_rule_6_2_1_2_4: true # NOTE: depends also on 'cis_ubuntu2204_set_journal_upload'
-cis_ubuntu2204_rule_6_2_2_1: true
+cis_ubuntu2204_rule_6_2_2_1: false  # disabled by Kenneth Masis
 cis_ubuntu2204_rule_6_3_1_1: true
 cis_ubuntu2204_rule_6_3_1_2: true
 cis_ubuntu2204_rule_6_3_1_3: true
@@ -323,7 +323,7 @@ cis_ubuntu2204_rule_7_1_8: true
 cis_ubuntu2204_rule_7_1_9: true
 cis_ubuntu2204_rule_7_1_10: true
 cis_ubuntu2204_rule_7_1_11: false  # Disabled by Kenneth Masis
-cis_ubuntu2204_rule_7_1_12: true
+cis_ubuntu2204_rule_7_1_12: false  # Disabled by Kenneth Masis
 cis_ubuntu2204_rule_7_1_13: true
 cis_ubuntu2204_rule_7_2_1: true
 cis_ubuntu2204_rule_7_2_2: true
