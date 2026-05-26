@@ -774,35 +774,71 @@ cis_ubuntu2204_section3_group_default: root
 cis_ubuntu2204_section3_mode_default: "0644"
 
 cis_ubuntu2204_protected_services:
-  - mysql
+  - CIS-CAT_Pro_Dashboard.service
+  - dbus.service
+  - cron.service
   - mariadb
-  - postgresql
-  - apache2
-  - nginx
-  - splunk
-  - zabbix-agent2
-  - zabbix-server
+  - mariadb.service
+  - mariadb-server
+  - rsync
+  - rsync.service
+  - mariadb
+  - mariadb.service
+  - mariadb-server
+  - chrony
+  - chrony.service
+  - dbus
+  - dbus.service
+  - ssh
+  - sshd
+  - ssh.service
+  - systemd-journald
+  - rsyslog
+  - systemd-timesyncd
+  - dbus
+  - networkd-dispatcher
+  - xrdp.service
   - rpcbind
   - rpcbind.service
   - rpcbind.socket
-  - rpc-statd
-  - rpc-statd.service
 
 cis_ubuntu2204_role_protected_services:
-  web:
+  web_profile:
     - apache2
-    - containerd
+    - apache2.service
+    - containerd.service
+    - docker
+    - docker.service
     - nginx
-    - php*-fpm
+    - nginx.service
+    - rsync
+    - rsync.service
+    - rpcbind
+    - rpcbind.service
+    - rpcbind.socket
     - mariadb
-    - mysql
-  db:
-    - mariadb
-    - mysql
+    - mariadb.service
+    - mariadb-server
+    - rpcbind
+    - rpcbind.service
+    - rpcbind.socket
     - postgresql
+    - postgresql.service
+  database_profile:
+    - mysql
+    - mysqld
+    - mysql.service
+    - mariadb
+    - mariadb.service
+    - postgresql
+    - postgresql.service
   security_profile:
     - vsftpd
+    - vsftpd.service
     - proftpd
-    - tftpd-hpa
+    - proftpd.service
+    - tftpd-hpa.service
     - snmpd
+    - snmpd.service
     - rsyslog
+    - rsyslog.service
