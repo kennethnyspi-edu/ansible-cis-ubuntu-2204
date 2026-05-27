@@ -1636,9 +1636,25 @@
     - server_l2
     - workstation_l2
 
-- name: "SECTION5 | 5.4.3.2 | Ensure default user shell timeout is configured"
+- name: "SECTION5 | 5.4.3.2 | Ensure default user shell timeout is configured - remove from other files"
   ansible.builtin.lineinfile:
     dest: "{{ item }}"
+    regexp: '{{ cis_ubuntu2204_regex_base_search }}readonly\s+TMOUT=\d+\s+;\s+export\sTMOUT'
+    state: absent
+  with_items:
+    - /etc/bash.bashrc
+    - /etc/profile
+    - /etc/bashrc
+  when:
+    - cis_ubuntu2204_rule_5_4_3_2
+  tags:
+    - rule_5_4_3
+    - server_l1
+    - workstation_l1
+
+- name: "SECTION5 | 5.4.3.2 | Ensure default user shell timeout is configured"
+  ansible.builtin.lineinfile:
+    dest: /etc/profile.d/99-tmout.sh
     regexp: '{{ cis_ubuntu2204_regex_base_search }}readonly\s+TMOUT=\d+\s+;\s+export\sTMOUT'
     line: "readonly TMOUT=900 ; export TMOUT"
     state: present
@@ -1646,11 +1662,6 @@
     owner: root
     group: root
     mode: "0644"
-  with_items:
-    - /etc/bash.bashrc
-    - /etc/profile
-    - /etc/bashrc
-    - /etc/profile.d/99-tmout.sh
   when:
     - cis_ubuntu2204_rule_5_4_3_2
   tags:
