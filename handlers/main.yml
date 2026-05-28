@@ -138,3 +138,12 @@
   failed_when: false
   listen: load audit rules
   notify: restart auditd
+
+# ------------------------------------------------------------------------------
+
+- name: "HANDLER | POST | restart sshd"
+  become: true
+  ansible.builtin.systemd_service:
+    name: sshd
+    state: restarted
+  listen: "Restart sshd"
