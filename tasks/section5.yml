@@ -305,7 +305,7 @@
   ansible.builtin.lineinfile:
     dest: /etc/ssh/sshd_config
     regexp: "{{ cis_ubuntu2204_regex_base_search }}LoginGraceTime"
-    line: "LoginGraceTime 60"
+    line: "LoginGraceTime {{ cis_ubuntu2204_ssh_login_grace_time }}"
     state: present
     create: true
     owner: root
