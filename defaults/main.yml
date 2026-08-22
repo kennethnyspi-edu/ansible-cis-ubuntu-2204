@@ -802,6 +802,11 @@ cis_ubuntu2204_protected_services:
   - rpcbind
   - rpcbind.service
   - rpcbind.socket
+  - nfs-common
+  - rpcbind
+  - xserver-common
+  - xserver-xorg
+  - xorg
 
 cis_ubuntu2204_role_protected_services:
   web_profile:
