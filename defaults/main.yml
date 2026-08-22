@@ -88,8 +88,8 @@ cis_ubuntu2204_rule_2_1_7: true
 cis_ubuntu2204_rule_2_1_7_remove: true
 cis_ubuntu2204_rule_2_1_8: true
 cis_ubuntu2204_rule_2_1_8_remove: true
-cis_ubuntu2204_rule_2_1_9: true
-cis_ubuntu2204_rule_2_1_9_remove: true
+cis_ubuntu2204_rule_2_1_9: false
+cis_ubuntu2204_rule_2_1_9_remove: false
 cis_ubuntu2204_rule_2_1_10: true
 cis_ubuntu2204_rule_2_1_10_remove: true
 cis_ubuntu2204_rule_2_1_11: true # NOTE: depends also on 'cis_ubuntu2204_allow_cups'
