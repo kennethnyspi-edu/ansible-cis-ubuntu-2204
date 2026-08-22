@@ -350,7 +350,7 @@ cis_ubuntu2204_disable_boot_pass: true
 # autofs allow auto mount (cis_ubuntu2204_rule_1_7_6|cis_ubuntu2204_rule_1_7_7|cis_ubuntu2204_rule_2_1_1)
 cis_ubuntu2204_allow_autofs: false
 # gdm allow, else remove (cis_ubuntu2204_rule_1_7_*,cis_ubuntu2204_rule_2_1_20)
-cis_ubuntu2204_allow_gdm_gui: false
+cis_ubuntu2204_allow_gdm_gui: true
 # cups allow printer service, else remove (cis_ubuntu2204_rule_2_2_3)
 cis_ubuntu2204_allow_cups: false
 # ipv6 is required (cis_ubuntu2204_rule_3_1_1)
