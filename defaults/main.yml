@@ -542,6 +542,35 @@ cis_ubuntu2204_audit_sudo_log_file: /var/log/sudo.log
 # in file (cis_6_3_3_15.rules.j2|cis_6_3_3_16.rules.j2|cis_6_3_3_17.rules.j2|cis_6_3_3_18.rules.j2|cis_6_3_3_19.rules.j2)
 cis_ubuntu2204_audit_uid_min: 1000
 
+# 6.3.3.6 - filesystems scanned for setuid/setgid binaries
+cis_ubuntu2204_priv_cmd_local_fstypes:
+  - ext2
+  - ext3
+  - ext4
+  - xfs
+  - btrfs
+  - zfs
+  - vfat
+
+# Network/cluster filesystems - reported, never crawled
+cis_ubuntu2204_network_fstypes:
+  - nfs
+  - nfs4
+  - lustre
+  - cifs
+  - smb3
+  - ceph
+  - glusterfs
+  - fuse.glusterfs
+  - fuse.sshfs
+  - fuse.cvmfs
+  - cvmfs
+  - gpfs
+  - beegfs
+  - autofs
+
+cis_ubuntu2204_priv_cmd_find_timeout: 600   # seconds per filesystem
+
 # ------------------------------------------------------------------------------
 
 # SPECIAL multi similar CIS rules set for 2.1

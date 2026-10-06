@@ -575,17 +575,44 @@
     - workstation_l2
     - molecule-idempotence-notest
   block:
-    - name: "SECTION6 | 6.3.3.6 | Ensure use of privileged commands are collected | get list of setuid/setguid binaries"
+    - name: "SECTION6 | 6.3.3.6 | Ensure use of privileged commands are collected | detect network filesystems"
+      ansible.builtin.command:
+        argv:
+          - findmnt
+          - -n
+          - -l
+          - -k
+          - -o
+          - TARGET,FSTYPE,SOURCE
+          - -t
+          - "{{ cis_ubuntu2204_network_fstypes | join(',') }}"
+      register: cis_ubuntu2204_network_mounts
+      changed_when: false
+      failed_when: cis_ubuntu2204_network_mounts.rc not in [0, 1]   # rc 1 = none found
+      check_mode: false
+
+    - name: "SECTION6 | 6.3.3.6 | Ensure use of privileged commands are collected | report skipped network filesystems"
+      ansible.builtin.debug:
+        msg:
+          - "Network filesystems excluded from setuid/setgid scan on {{ inventory_hostname }}:"
+          - "{{ cis_ubuntu2204_network_mounts.stdout_lines }}"
+      when: cis_ubuntu2204_network_mounts.stdout_lines | length > 0
+
+    - name: "SECTION6 | 6.3.3.6 | Ensure use of privileged commands are collected | get list of setuid/setgid binaries"
       ansible.builtin.shell: |
         set -o pipefail
-        for PARTITION in $(findmnt -n -l -k -it "$(awk '/nodev/ { print $2 }' /proc/filesystems | paste -sd,)" | grep -Pv "noexec|nosuid" | awk '{print $1}'); do
-          find "${PARTITION}" -xdev -perm /6000 -type f 2>/dev/null
-        done
+        for PARTITION in $(findmnt -n -l -k -o TARGET,OPTIONS \
+            -t {{ cis_ubuntu2204_priv_cmd_local_fstypes | join(',') }} \
+            | grep -Pv 'noexec|nosuid' | awk '{print $1}' || true); do
+          timeout {{ cis_ubuntu2204_priv_cmd_find_timeout }} \
+            find "${PARTITION}" -xdev -perm /6000 -type f 2>/dev/null || true
+        done | sort -u
       args:
         executable: "{{ cis_ubuntu2204_shell_executable }}"
       register: cis_ubuntu2204_audit_proc_paths
       changed_when: false
       check_mode: false
+
     - name: "SECTION6 | 6.3.3.6 | Ensure use of privileged commands are collected | set rule"
       ansible.builtin.template:
         src: audit/cis_6_3_3_6.rules.j2
