@@ -419,7 +419,7 @@ cis_ubuntu2204_ssh_ciphers:
   - aes192-ctr
   - aes128-ctr
 # (cis_ubuntu2204_rule_5_1_7)
-cis_ubuntu2204_ssh_client_alive_interval: 150
+cis_ubuntu2204_ssh_client_alive_interval: 30
 cis_ubuntu2204_ssh_client_alive_count_max: 3
 # KexAlgorithms (cis_ubuntu2204_rule_5_1_12)
 cis_ubuntu2204_ssh_kex_algorithms:
